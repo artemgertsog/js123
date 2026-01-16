@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Домашняя библиотека</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Домашняя библиотека</h1>
+        </header>
+        
+        <main class="main-content">
+            <div class="controls">
+                <button id="addBookBtn" class="btn btn-primary">Добавить книгу</button>
+                <button id="searchBookBtn" class="btn btn-secondary">Найти</button>
+            </div>
+            
+            <div class="books-container">
+                <h2>Список книг</h2>
+                <ul id="booksList" class="books-list">
+                    <!-- Книги будут добавляться сюда -->
+                </ul>
+            </div>
+        </main>
+        
+        <footer class="footer">
+            <p>Всего книг: <span id="booksCount">0</span></p>
+        </footer>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>

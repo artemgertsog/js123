@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Рост учеников</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Рост учеников</h1>
+        
+        <div class="controls">
+            <button onclick="addHeight()" class="btn">Добавить рост</button>
+            <button onclick="filterHeights()" class="btn">Фильтровать</button>
+        </div>
+        
+        <div class="heights-list">
+            <h2>Список роста (в см)</h2>
+            <ul id="heightsList">
+                <!-- Список будет добавляться здесь -->
+            </ul>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>
