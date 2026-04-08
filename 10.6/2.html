@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Задача 2 - Динамический список</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        li {
+            margin: 5px 0;
+        }
+        button {
+            margin-right: 10px;
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Динамический список</h2>
+    <ul id="itemList">
+        <li>Новый элемент списка</li>
+        <li>Новый элемент списка</li>
+    </ul>
+    <button id="addBtn">Добавить элемент</button>
+    <button id="removeBtn">Удалить последний</button>
+
+    <script>
+        const list = document.getElementById('itemList');
+        const addBtn = document.getElementById('addBtn');
+        const removeBtn = document.getElementById('removeBtn');
+
+        addBtn.addEventListener('click', function() {
+            const newItem = document.createElement('li');
+            newItem.textContent = 'Новый элемент списка';
+            list.appendChild(newItem);
+        });
+
+        removeBtn.addEventListener('click', function() {
+            if (list.children.length > 0) {
+                list.removeChild(list.lastElementChild);
+            }
+        });
+    </script>
+</body>
+</html>

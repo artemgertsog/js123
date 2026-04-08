@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Промокоды</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+        .container {
+            width: 350px;
+        }
+        input, button {
+            padding: 8px;
+            margin-top: 10px;
+        }
+        .message {
+            margin-top: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            display: none;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h3>Введите промокод</h3>
+    <input type="text" id="promoInput" placeholder="Например, PROM50">
+    <br>
+    <button id="submitBtn">Активировать</button>
+    <div id="message" class="message"></div>
+</div>
+
+<script>
+    const promocodeArr = [
+        { promocode: "PROM10", gift: "Скидка 10%" },
+        { promocode: "PROM50", gift: "Скидка 50%" },
+        { promocode: "GIFT", gift: "Подарок в корзине" }
+    ];
+
+    const input = document.getElementById('promoInput');
+    const btn = document.getElementById('submitBtn');
+    const msgDiv = document.getElementById('message');
+
+    function getCookie(name) {
+        let matches = document.cookie.match(new RegExp(
+            "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+        ));
+        return matches ? decodeURIComponent(matches[1]) : undefined;
+    }
+
+    function setCookie(name, value, days) {
+        let date = new Date();
+        date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+        document.cookie = name + "=" + encodeURIComponent(value) + "; expires=" + date.toUTCString() + "; path=/";
+    }
+
+    function showMessage(text, isSuccess) {
+        msgDiv.textContent = text;
+        msgDiv.style.display = "block";
+        msgDiv.className = "message " + (isSuccess ? "success" : "error");
+    }
+
+    function activateForm(promocode, gift) {
+        input.value = promocode;
+        input.disabled = true;
+        btn.disabled = true;
+        showMessage("Промокод активирован! Подарок: " + gift, true);
+    }
+
+    function resetForm() {
+        input.disabled = false;
+        btn.disabled = false;
+        msgDiv.style.display = "none";
+    }
+
+    function checkPromocode() {
+        let code = input.value.trim().toUpperCase();
+        if (code === "") {
+            showMessage("Введите промокод", false);
+            return;
+        }
+        let found = promocodeArr.find(item => item.promocode === code);
+        if (found) {
+            setCookie("savedPromocode", code, 30);
+            activateForm(code, found.gift);
+        } else {
+            showMessage("Неверный промокод", false);
+        }
+    }
+
+    function restoreFromCookie() {
+        let saved = getCookie("savedPromocode");
+        if (saved) {
+            let found = promocodeArr.find(item => item.promocode === saved);
+            if (found) {
+                activateForm(saved, found.gift);
+            } else {
+                resetForm();
+            }
+        } else {
+            resetForm();
+        }
+    }
+
+    btn.addEventListener("click", checkPromocode);
+    restoreFromCookie();
+</script>
+</body>
+</html>

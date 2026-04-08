@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подарок для вас</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        /* Оверлей (затемнение) */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        /* Карточка подарка */
+        .gift-card {
+            background: white;
+            width: 400px;
+            max-width: 90%;
+            border-radius: 20px;
+            padding: 30px 25px 25px;
+            text-align: center;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.2);
+            animation: fadeInUp 0.4s ease;
+            position: relative;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .gift-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: #fce4ec;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
+        .gift-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+        .gift-button {
+            background: #ff6b6b;
+            border: none;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 12px 30px;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 10px;
+            width: 100%;
+        }
+        .gift-button:hover {
+            background: #ff5252;
+        }
+        /* Контент страницы (просто для фона) */
+        .content {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>Добро пожаловать в магазин!</h1>
+        <p>Щас будет подарок.</p>
+    </div>
+
+    <script>
+        // Массив подарков
+        const giftArr = [
+            {
+                title: "Скидка 20% на первую покупку в нашем магазине!",
+                icon: "/img/discount.svg"
+            },
+            {
+                title: "Скидка 10% на всё!",
+                icon: "/img/discount_2.svg"
+            },
+            {
+                title: "Подарок при первой покупке в нашем магазине!",
+                icon: "/img/gift.svg"
+            },
+            {
+                title: "Бесплатная доставка для вас!",
+                icon: "/img/delivery.svg"
+            },
+            {
+                title: "Сегодня день больших скидок!",
+                icon: "/img/discount_3.svg"
+            }
+        ];
+
+        // Функция для получения случайного подарка
+        function getRandomGift() {
+            const randomIndex = Math.floor(Math.random() * giftArr.length);
+            return giftArr[randomIndex];
+        }
+
+        // Функция создания карточки (попапа)
+        function createPopup(gift) {
+            // Создаём оверлей
+            const overlay = document.createElement('div');
+            overlay.className = 'popup-overlay';
+
+            // Создаём карточку
+            const card = document.createElement('div');
+            card.className = 'gift-card';
+
+            // Иконки сделал через ии
+            let iconEmoji = '🎁';
+            if (gift.title.includes('скидка') || gift.title.includes('Скидка')) {
+                iconEmoji = '🏷️';
+            }
+            if (gift.title.includes('доставка')) {
+                iconEmoji = '🚚';
+            }
+            if (gift.title.includes('подарок')) {
+                iconEmoji = '🎁';
+            }
+
+            // Блок иконки
+            const iconDiv = document.createElement('div');
+            iconDiv.className = 'gift-icon';
+            iconDiv.textContent = iconEmoji;
+
+            // Заголовок
+            const titleDiv = document.createElement('div');
+            titleDiv.className = 'gift-title';
+            titleDiv.textContent = gift.title;
+
+            // Кнопка
+            const button = document.createElement('button');
+            button.className = 'gift-button';
+            button.textContent = 'Отлично!';
+
+            // Собираем карточку
+            card.appendChild(iconDiv);
+            card.appendChild(titleDiv);
+            card.appendChild(button);
+            overlay.appendChild(card);
+
+            // Добавляем обработчик закрытия
+            button.addEventListener('click', function() {
+                overlay.remove();
+            });
+
+            // Добавляем оверлей на страницу
+            document.body.appendChild(overlay);
+        }
+
+        // Показываем карточку через 3 секунды после загрузки страницы
+        setTimeout(function() {
+            const randomGift = getRandomGift();
+            createPopup(randomGift);
+        }, 3000);
+    </script>
+</body>
+</html>

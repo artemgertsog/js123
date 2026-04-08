@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title> банковская карта</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: inline-block;
+            width: 120px;
+        }
+        input, select {
+            padding: 5px;
+            width: 200px;
+        }
+        #card {
+            width: 300px;
+            padding: 20px;
+            border: 2px solid #333;
+            border-radius: 15px;
+            background-color: #f0f0f0;
+            margin-top: 20px;
+            font-size: 18px;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+        input:focus {
+            background-color: #ffffcc;
+            border: 2px solid #ff9900;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Дизайн банковской карты</h2>
+
+<div class="form-group">
+    <label>Текст на карте:</label>
+    <input type="text" id="cardText" placeholder="Введите текст">
+</div>
+
+<div class="form-group">
+    <label>Цвет карты:</label>
+    <select id="colorSelect">
+        <option value="#f0f0f0">Серый (по умолчанию)</option>
+        <option value="red">Красный</option>
+        <option value="blue">Синий</option>
+        <option value="green">Зелёный</option>
+    </select>
+</div>
+
+<p id="card">Ваша банковская карта</p>
+
+<script>
+    const textInput = document.getElementById('cardText');
+    const colorSelect = document.getElementById('colorSelect');
+    const cardElement = document.getElementById('card');
+
+    textInput.addEventListener('input', function() {
+        if (textInput.value === '') {
+            cardElement.textContent = 'Ваша банковская карта';
+        } else {
+            cardElement.textContent = textInput.value;
+        }
+    });
+
+    textInput.addEventListener('focus', function() {
+        textInput.style.backgroundColor = '#ffffcc';
+        textInput.style.border = '2px solid #ff9900';
+    });
+
+    textInput.addEventListener('blur', function() {
+        textInput.style.backgroundColor = '';
+        textInput.style.border = '';
+    });
+
+    colorSelect.addEventListener('change', function() {
+        cardElement.style.backgroundColor = colorSelect.value;
+    });
+</script>
+</body>
+</html>

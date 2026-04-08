@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Задача 3 - Сортировка цен</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        li {
+            margin: 5px 0;
+        }
+        button {
+            margin-right: 10px;
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Список цен</h2>
+    <ul id="priceList"></ul>
+    <button id="sortAscBtn">По возрастанию</button>
+    <button id="sortDescBtn">По убыванию</button>
+
+    <script>
+        const prices = [100, 500, 250, 750, 300];
+        const priceList = document.getElementById('priceList');
+
+        function renderPrices(arr) {
+            priceList.innerHTML = '';
+            for (let i = 0; i < arr.length; i++) {
+                const li = document.createElement('li');
+                li.textContent = arr[i] + ' ₽';
+                priceList.appendChild(li);
+            }
+        }
+
+        function sortAsc() {
+            const sorted = [...prices].sort((a, b) => a - b);
+            renderPrices(sorted);
+        }
+
+        function sortDesc() {
+            const sorted = [...prices].sort((a, b) => b - a);
+            renderPrices(sorted);
+        }
+
+        document.getElementById('sortAscBtn').addEventListener('click', sortAsc);
+        document.getElementById('sortDescBtn').addEventListener('click', sortDesc);
+
+        renderPrices(prices);
+    </script>
+</body>
+</html>

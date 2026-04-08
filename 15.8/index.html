@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мои фильмы</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Коллекция фильмов</h1>
+
+        <!-- Форма добавления -->
+        <div class="card">
+            <h2>Добавить фильм</h2>
+            <form id="film-form">
+                <div class="form-group">
+                    <label for="title">Название *</label>
+                    <input type="text" id="title" placeholder="Введите название">
+                </div>
+                <div class="form-group">
+                    <label for="genre">Жанр *</label>
+                    <input type="text" id="genre" placeholder="Например: драма">
+                </div>
+                <div class="form-group">
+                    <label for="releaseYear">Год *</label>
+                    <input type="number" id="releaseYear" placeholder="2024">
+                </div>
+                <div class="form-group checkbox">
+                    <input type="checkbox" id="isWatched">
+                    <label for="isWatched">Просмотрено</label>
+                </div>
+                <div id="form-error" class="error-message"></div>
+                <button type="submit">Добавить фильм</button>
+            </form>
+        </div>
+
+        <!-- Фильтры и удаление всех -->
+        <div class="filters-bar">
+            <div class="filters">
+                <input type="text" id="filterTitle" placeholder="Название">
+                <input type="text" id="filterGenre" placeholder="Жанр">
+                <input type="number" id="filterYear" placeholder="Год">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="filterWatched"> Только просмотренные
+                </label>
+                <button id="applyFilters">Применить</button>
+                <button id="resetFilters">Сбросить</button>
+            </div>
+            <button id="deleteAllBtn" class="btn-danger">Удалить все</button>
+        </div>
+
+        <!-- Таблица -->
+        <table id="film-table">
+            <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>Жанр</th>
+                    <th>Год</th>
+                    <th>Просмотрено</th>
+                    <th>Действие</th>
+                </tr>
+            </thead>
+            <tbody id="film-tbody"></tbody>
+        </table>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

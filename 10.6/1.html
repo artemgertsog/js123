@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>галерея</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: system-ui, 'Segoe UI', sans-serif;
+            background: #f0f2f5;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .gallery {
+            background: white;
+            border-radius: 24px;
+            padding: 30px;
+            max-width: 1000px;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: #1e2a3a;
+        }
+        .thumbnails {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        .thumbnail {
+            width: 180px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .thumbnail:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        .fullsize-area {
+            background: #f8f9fc;
+            border-radius: 20px;
+            padding: 20px;
+            min-height: 450px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #cbd5e1;
+        }
+        .fullsize-image {
+            max-width: 100%;
+            max-height: 450px;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+        .placeholder {
+            text-align: center;
+            color: #94a3b8;
+        }
+        .placeholder span {
+            font-size: 64px;
+            display: block;
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+<body>
+<div class="gallery">
+    <h1> Фотогалерея</h1>
+    <div class="thumbnails">
+        <!-- Миниатюры с уникальными id -->
+        <img src="1.jpg" alt="Изображение 1" class="thumbnail" id="thumb1" data-full="1.jpg">
+        <img src="2.jpg" alt="Изображение 2" class="thumbnail" id="thumb2" data-full="2.jpg">
+        <img src="3.jpg" alt="Изображение 3" class="thumbnail" id="thumb3" data-full="3.jpg">
+    </div>
+    <div class="fullsize-area" id="fullsizeContainer">
+        <div class="placeholder">
+            <p>Нажмите на миниатюру</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // Получаем миниатюры и контейнер для большого изображения
+        const thumbs = document.querySelectorAll('.thumbnail');
+        const fullContainer = document.getElementById('fullsizeContainer');
+
+        /**
+         * Отображает полноразмерное изображение по URL
+         * @param {string} imgUrl - адрес изображения
+         * @param {string} altText - альтернативный текст
+         */
+        function showFullImage(imgUrl, altText) {
+            fullContainer.innerHTML = '';
+            const img = document.createElement('img');
+            img.src = imgUrl;
+            img.alt = altText;
+            img.className = 'fullsize-image';
+            fullContainer.appendChild(img);
+        }
+
+        // Добавляем обработчик клика для каждой миниатюры
+        thumbs.forEach(thumb => {
+            thumb.addEventListener('click', function() {
+                const url = this.getAttribute('data-full') || this.src;
+                const alt = this.alt || 'Изображение';
+                showFullImage(url, alt);
+            });
+        });
+    })();
+</script>
+</body>
+</html>

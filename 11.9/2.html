@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Калькуляция доставки товаров</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: inline-block;
+            width: 150px;
+        }
+        input {
+            padding: 5px;
+            width: 200px;
+        }
+        button {
+            padding: 6px 15px;
+            margin-top: 5px;
+        }
+        .error {
+            color: red;
+            margin-left: 155px;
+            font-size: 0.9em;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Расчёт стоимости доставки товаров</h2>
+
+<div class="form-group">
+    <label>Название товара:</label>
+    <input type="text" id="productName" placeholder="Введите название">
+</div>
+
+<div class="form-group">
+    <label>Вес (кг):</label>
+    <input type="number" id="weight" step="any" placeholder="0.0">
+</div>
+
+<div class="form-group">
+    <label>Расстояние (км):</label>
+    <input type="number" id="distance" step="any" placeholder="0.0">
+</div>
+
+<div class="form-group">
+    <label></label>
+    <button id="addBtn">Добавить товар</button>
+</div>
+
+<div id="errorMsg" class="error"></div>
+
+<table class="product-table">
+    <thead>
+        <tr>
+            <th>Название товара</th>
+            <th>Вес (кг)</th>
+            <th>Расстояние (км)</th>
+            <th>Стоимость доставки</th>
+        </tr>
+    </thead>
+    <tbody id="tableBody">
+        <!-- сюда будут добавляться строки -->
+    </tbody>
+</table>
+
+<script>
+    const nameInput = document.getElementById('productName');
+    const weightInput = document.getElementById('weight');
+    const distanceInput = document.getElementById('distance');
+    const addBtn = document.getElementById('addBtn');
+    const errorDiv = document.getElementById('errorMsg');
+    const tableBody = document.getElementById('tableBody');
+
+    function validateForm() {
+        const name = nameInput.value.trim();
+        const weight = parseFloat(weightInput.value);
+        const distance = parseFloat(distanceInput.value);
+
+        if (name === '') {
+            errorDiv.textContent = 'Ошибка: название товара не может быть пустым';
+            return false;
+        }
+        if (isNaN(weight) || weight <= 0) {
+            errorDiv.textContent = 'Ошибка: вес должен быть положительным числом';
+            return false;
+        }
+        if (isNaN(distance) || distance <= 0) {
+            errorDiv.textContent = 'Ошибка: расстояние должно быть положительным числом';
+            return false;
+        }
+        errorDiv.textContent = '';
+        return true;
+    }
+
+    function addProduct() {
+        if (!validateForm()) {
+            return;
+        }
+
+        const name = nameInput.value.trim();
+        const weight = parseFloat(weightInput.value);
+        const distance = parseFloat(distanceInput.value);
+        const deliveryCost = (weight * distance) / 10;
+
+        const row = tableBody.insertRow();
+        const cellName = row.insertCell(0);
+        const cellWeight = row.insertCell(1);
+        const cellDistance = row.insertCell(2);
+        const cellCost = row.insertCell(3);
+
+        cellName.textContent = name;
+        cellWeight.textContent = weight.toFixed(2);
+        cellDistance.textContent = distance.toFixed(2);
+        cellCost.textContent = deliveryCost.toFixed(2) + ' руб.';
+
+        nameInput.value = '';
+        weightInput.value = '';
+        distanceInput.value = '';
+    }
+
+    addBtn.addEventListener('click', addProduct);
+</script>
+</body>
+</html>
